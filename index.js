@@ -16,19 +16,22 @@ let count =0
 io.on('connection',(socket)=>{
     console.log('new websocket connection');
 
-    socket.emit('message','Welcome')
+    socket.emit('message','Welcome');
+    socket.broadcast.emit('message','here is new user joined')
 
-    socket.on('sendMessage',(message)=>{
+    socket.on('sendMessage',(message,callback)=>{
         io.emit('message',message)
+        callback()
     })
 
-    // socket.emit('countUpdated',count)
+    socket.on('sendLocation',(coords)=>{
+            io.emit('message',`http://www.google.com/maps?q=${coords.latitude},${coords.longitude}`)
+    })
 
-    // socket.on('increment',()=>{
-    //     count++
-    //     // socket.emit('countUpdated',count)
-    //     io.emit('countUpdated',count)
-    // })
+    socket.on('disconnect',()=>{
+        io.emit('message','A user has left')
+    })
+
 })
 
 
