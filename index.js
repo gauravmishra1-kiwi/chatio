@@ -14,21 +14,21 @@ app.use(express.static(publicDirectoryPath))
 
 let count =0
 io.on('connection',(socket)=>{
-    // console.log('new websocket connection');
+    console.log('new websocket connection');
 
-    // socket.emit('message','Welcome')
+    socket.emit('message','Welcome')
 
-    // socket.on('sendMessage',(message)=>{
-    //     io.emit('message',message)
-    // })
-
-    socket.emit('countUpdated',count)
-
-    socket.on('increment',()=>{
-        count++
-        // socket.emit('countUpdated',count)
-        io.emit('countUpdated',count)
+    socket.on('sendMessage',(message)=>{
+        io.emit('message',message)
     })
+
+    // socket.emit('countUpdated',count)
+
+    // socket.on('increment',()=>{
+    //     count++
+    //     // socket.emit('countUpdated',count)
+    //     io.emit('countUpdated',count)
+    // })
 })
 
 
