@@ -28,7 +28,7 @@ io.on('connection',(socket)=>{
         }
 
         io.emit('message',message)
-        callback('Delivered')
+        callback()
     })
 
     socket.on('sendLocation',(coords,callback)=>{
