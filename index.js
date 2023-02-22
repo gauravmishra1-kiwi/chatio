@@ -18,8 +18,14 @@ let count = 0
 io.on('connection', (socket) => {
     console.log('new websocket connection');
 
-    socket.emit('message', genrateMessage('welcome'));
-    socket.broadcast.emit('message', genrateMessage('here is new user joined'))
+    
+    socket.on('join',({username, room})=>{
+        socket.join(room)
+
+        socket.emit('message', genrateMessage('welcome'));
+        socket.broadcast.to(room).emit('message', genrateMessage(`${username} has joined`))
+
+    })
 
     socket.on('sendMessage', (message, callback) => {
 
